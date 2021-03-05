@@ -2,8 +2,8 @@ terraform {}
 
 provider "dashdog" {
   host = "api.datadoghq.eu"
-  api_key = "fe02fc133c9f3b6ad4a5fd2bffa2c415"
-  app_key = "08147e0086776f39cd311457ad4613c26affc31c"
+  api_key = "<API_KEY>"
+  app_key = "<APP_KEY>"
 }
 
 resource "dashdog_widget" "test" {
