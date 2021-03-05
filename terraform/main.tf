@@ -1,21 +1,60 @@
-terraform {
+terraform {}
+
+provider "dashdog" {
+  host = "api.datadoghq.eu"
+  api_key = "fe02fc133c9f3b6ad4a5fd2bffa2c415"
+  app_key = "08147e0086776f39cd311457ad4613c26affc31c"
 }
 
-provider "multiverse" {}
-
-resource "multiverse_custom_resource" "custom-resource" {
-  executor = "python3"
-  script = "my-script.py"
-  id_key = "id"
-  name = "test"
-  data = <<JSON
-{
-  "name": "test-terraform-test",
-  "mlb_id": "lb-124",
-  "mlb_deployment_id": "dp-123",
-  "mlb_listener_ids": ["ls-124", "ls-456"],
-  "test_group_callback_fqdn": "test.fqdn.com",
-  "control_group_callback_fqdn": "control.fqdn.com"
+resource "dashdog_widget" "test" {
+  type = "timeseries"
+  title = "other title"
+  requests = [
+    {
+      query = "avg:system.load.1{$host}"
+      display_type = "area"
+    }
+  ]
 }
-JSON
+
+resource "dashdog_dashboard" "dash" {
+  title = "dash1"
+  description = "super cool dashboard"
+  read_only = false
+  template_variables = [
+    {
+      name = "host"
+      tag = "host"
+      default = "*"
+    }
+  ]
+  widgets = [
+    {
+      title = "group 1"
+      json = [
+        "${dashdog_widget.test.json}"
+      ]
+    }
+  ]
+}
+
+resource "dashdog_dashboard" "dash2" {
+  title = "dash2"
+  description = "super cool dashboard"
+  read_only = false
+  template_variables = [
+    {
+      name = "host"
+      tag = "host"
+      default = "*"
+    }
+  ]
+  widgets = [
+    {
+      title = "group 2"
+      json = [
+        "${dashdog_widget.test.json}"
+      ]
+    }
+  ]
 }
