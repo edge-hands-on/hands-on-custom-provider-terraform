@@ -25,24 +25,28 @@ func Resource() *schema.Resource {
 			"type": {
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "The widget type, one of ('timeseries', 'toplist', 'query_value').",
 			},
 
 			"title": {
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "Title for the widget.",
 			},
 
 			"autoscale": {
 				Type:        schema.TypeBool,
 				Optional:    true,
+				ForceNew:    true,
 				Description: "Autoscale value for query value widget.",
 			},
 
 			"precision": {
 				Type:        schema.TypeInt,
 				Optional:    true,
+				ForceNew:    true,
 				Description: "The precision for query value widget.",
 			},
 
@@ -60,18 +64,21 @@ func Resource() *schema.Resource {
 						"query": {
 							Type:        schema.TypeString,
 							Required:    true,
+							ForceNew:    true,
 							Description: "The query to be executed.",
 						},
 
 						"display_type": {
 							Type:        schema.TypeString,
 							Optional:    true,
+							ForceNew:    true,
 							Description: "Used for the time series widget.",
 						},
 
 						"aggregator": {
 							Type:        schema.TypeString,
 							Optional:    true,
+							ForceNew:    true,
 							Description: "Used for the query value widget.",
 						},
 					},
